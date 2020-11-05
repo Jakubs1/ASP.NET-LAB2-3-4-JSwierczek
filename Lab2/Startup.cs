@@ -41,13 +41,13 @@ namespace Lab2
                     name: "default",
                     pattern: "{controller=Product}/{action=List}/{id?}")
                     );
+                SeedData.EnsurePopulated(app);
             }
 
             app.UseRouting();
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapRazorPages();
                 endpoints.MapGet("/", async context =>
                 {
                     await context.Response.WriteAsync("Hello World!");

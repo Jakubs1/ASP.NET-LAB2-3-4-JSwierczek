@@ -8,9 +8,9 @@ namespace Lab2.Models
     public class FakeProductRepository : IProductRepository
     {
         public IQueryable<Product> Products => new List<Product> {     
-            new Product { Name = "Piłka nożna", Price = 25 },
-            new Product { Name = "Deska surfingowa", Price = 179 },
-            new Product { Name = "Buty do biegania", Price = 95 }, 
+            new Product { Name = "Piłka nożna", Price = 25, Category="sprzęt sportowy", IDProduct = 2, Description="Roteiro" },
+            new Product { Name = "Deska surfingowa", Price = 179, Category="sprzęt sportowy", IDProduct = 3, Description="najlepsza"},
+            new Product { Name = "Buty do biegania", Price = 95, Category="sprzęt sportowy", IDProduct = 1, Description="super szybkie"}, 
         }.AsQueryable<Product>();
     
     }
