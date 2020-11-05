@@ -37,6 +37,10 @@ namespace Lab2
                 app.UseStatusCodePages(); // Wyœwietla strony ze statusem b³êdu
                 app.UseStaticFiles(); // obs³uga treœci statycznych css, images, js
                 app.UseRouting();
+                app.UseEndpoints(routes => routes.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller=Product}/{action=List}/{id?}")
+                    );
             }
 
             app.UseRouting();

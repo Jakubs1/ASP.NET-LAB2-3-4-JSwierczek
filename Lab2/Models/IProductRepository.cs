@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Lab2.Models
 {
-    interface IProductRepository
+    public interface IProductRepository
     {
         IQueryable<Product> Products { get;  }
     }
