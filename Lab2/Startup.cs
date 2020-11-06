@@ -16,10 +16,8 @@ namespace Lab2
     public class Startup
     {
         public IConfiguration Configuration { get; }
-        public Startup(IConfiguration configuration)
-        {
-            Configuration = configuration;
-        }
+        public Startup(IConfiguration configuration) => Configuration = configuration;
+   
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddRazorPages();
@@ -33,26 +31,39 @@ namespace Lab2
         {
             if (env.IsDevelopment())
             {
+                {
+                    app.UseDeveloperExceptionPage();
+                }
                 app.UseDeveloperExceptionPage(); // informacje szczegó³owe o b³êdach
                 app.UseStatusCodePages(); // Wyœwietla strony ze statusem b³êdu
                 app.UseStaticFiles(); // obs³uga treœci statycznych css, images, js
                 app.UseRouting();
-                app.UseEndpoints(routes => routes.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller=Product}/{action=List}/{id?}")
-                    );
+                app.UseEndpoints(routes => {
+
+                    routes.MapControllerRoute(
+                        name: "default",
+                        pattern: "{controlller=Product}/{action=List}/{id?}");
+
+                    routes.MapControllerRoute(
+                        name: null,
+                        pattern: "Product/{category}",
+                    defaults: new
+                    {
+                        controller = "Product",
+                        action = "List",
+                    });
+                });         
                 SeedData.EnsurePopulated(app);
-            }
+            } 
 
             app.UseRouting();
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapGet("/", async context =>
-                {
-                    await context.Response.WriteAsync("Hello World!");
-                });
-            });
+            endpoints.MapControllerRoute(
+                name: "default",
+                pattern: "{controller=Product}/{action=List}/{category?}");                  
+            });           
         }
     }
 }
