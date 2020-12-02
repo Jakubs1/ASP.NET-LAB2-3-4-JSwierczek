@@ -9,14 +9,16 @@ namespace Lab2.Controllers
 {
     public class ProductController : Controller
     {
-        private readonly IProductRepository productRepository;
+        private readonly IProductRepository repository;
 
-        public ProductController(IProductRepository productRepository)
+        public ProductController(IProductRepository repository)
         {
-            this.productRepository = productRepository;
+            this.repository = repository;
         }
 
-        public ViewResult List(string category) => View(productRepository.Products.Where(p => p.Category == category));
+        public ViewResult ListAll() => View(repository.Products);
+
+        public ViewResult List(string category) => View(repository.Products.Where(p => p.Category == category));
 
         public IActionResult Index()
         {

@@ -17,7 +17,7 @@ namespace Lab2
     {
         public IConfiguration Configuration { get; }
         public Startup(IConfiguration configuration) => Configuration = configuration;
-   
+
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddRazorPages();
@@ -30,10 +30,8 @@ namespace Lab2
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
-            {
-                {
-                    app.UseDeveloperExceptionPage();
-                }
+            { 
+                
                 app.UseDeveloperExceptionPage(); // informacje szczegó³owe o b³êdach
                 app.UseStatusCodePages(); // Wyœwietla strony ze statusem b³êdu
                 app.UseStaticFiles(); // obs³uga treœci statycznych css, images, js
@@ -52,18 +50,25 @@ namespace Lab2
                         controller = "Product",
                         action = "List",
                     });
+
+                    routes.MapControllerRoute(
+                        name: null,
+                        pattern: "Admin/{action=Index}",
+                    defaults: new
+                    {
+                        controller = "Admin",
+                    });
                 });         
                 SeedData.EnsurePopulated(app);
-            } 
 
-            app.UseRouting();
 
-            app.UseEndpoints(endpoints =>
-            {
-            endpoints.MapControllerRoute(
-                name: "default",
-                pattern: "{controller=Product}/{action=List}/{category?}");                  
-            });           
+                /*app.UseEndpoints(endpoints =>
+                {
+                    endpoints.MapControllerRoute(
+                        name: "default",
+                        pattern: "{controller=Product}/{action=List}/{category?}");
+                });*/
+            }
         }
     }
 }
