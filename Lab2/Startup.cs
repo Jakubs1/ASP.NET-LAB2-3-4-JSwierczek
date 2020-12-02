@@ -11,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
+
 namespace Lab2
 {
     public class Startup
@@ -30,44 +31,39 @@ namespace Lab2
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
-            { 
-                
+            {
+                {
+                    app.UseDeveloperExceptionPage();
+                }
                 app.UseDeveloperExceptionPage(); // informacje szczegó³owe o b³êdach
                 app.UseStatusCodePages(); // Wyœwietla strony ze statusem b³êdu
                 app.UseStaticFiles(); // obs³uga treœci statycznych css, images, js
                 app.UseRouting();
-                app.UseEndpoints(routes => {
-
-                    routes.MapControllerRoute(
+                app.UseEndpoints(endpoints =>
+                {
+                    endpoints.MapControllerRoute(
                         name: "default",
-                        pattern: "{controlller=Product}/{action=List}/{id?}");
+                        pattern: "{controller=Product}/{action=List}/{id?}");
 
-                    routes.MapControllerRoute(
-                        name: null,
-                        pattern: "Product/{category}",
-                    defaults: new
-                    {
-                        controller = "Product",
-                        action = "List",
-                    });
+                    endpoints.MapControllerRoute(
+                       name: null,
+                       pattern: "Product/{category}",
+                   defaults: new
+                   {
+                       controller = "Product",
+                       action = "List",
+                   });
 
-                    routes.MapControllerRoute(
+                    endpoints.MapControllerRoute(
                         name: null,
                         pattern: "Admin/{action=Index}",
                     defaults: new
                     {
                         controller = "Admin",
                     });
-                });         
-                SeedData.EnsurePopulated(app);
-
-
-                /*app.UseEndpoints(endpoints =>
-                {
-                    endpoints.MapControllerRoute(
-                        name: "default",
-                        pattern: "{controller=Product}/{action=List}/{category?}");
-                });*/
+                });
+                SeedData.EnsurePopulated(app); 
+               
             }
         }
     }
