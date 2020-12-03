@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Lab2.Models;
+using Lab2.Middleware;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -36,6 +37,7 @@ namespace Lab2
                     app.UseDeveloperExceptionPage();
                 }
                 app.UseDeveloperExceptionPage(); // informacje szczegó³owe o b³êdach
+                app.UseElapsedTimeMiddleWare();
                 app.UseStatusCodePages(); // Wyœwietla strony ze statusem b³êdu
                 app.UseStaticFiles(); // obs³uga treœci statycznych css, images, js
                 app.UseRouting();
