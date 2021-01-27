@@ -46,5 +46,30 @@ namespace Lab2.Models
             }
             return dbEntry;
         }
+
+        public void CreateProduct(Product product)
+        {
+            ctx.Products.Add(new Product());
+            ctx.SaveChanges();
+        }
+
+        public bool EditProduct(Product product)
+        {
+            Product dbEntry = ctx.Products.FirstOrDefault(p => p.IDProduct == product.IDProduct);
+
+            if (dbEntry != null)
+            {
+                dbEntry.Name = product.Name;
+                dbEntry.Description = product.Description;
+                dbEntry.Price = product.Price;
+                dbEntry.Category = product.Category;
+            }
+            else
+            {
+                return false;
+            }
+            ctx.SaveChanges();
+            return true;
+        }
     }
 }
