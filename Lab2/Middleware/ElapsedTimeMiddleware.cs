@@ -16,7 +16,7 @@ namespace Lab2.Middleware
         {
             _next = next;
         }
-        
+
         public async Task Invoke(HttpContext context)
         {
             var sw = new Stopwatch();

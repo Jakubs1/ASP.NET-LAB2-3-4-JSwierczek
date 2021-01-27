@@ -7,6 +7,7 @@ using Lab2.Middleware;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -25,7 +26,11 @@ namespace Lab2
             services.AddRazorPages();
             services.AddTransient<IProductRepository, EFProductRepository>();
             services.AddDbContext<AppDbContext>(options => options.UseSqlServer(Configuration["Data:SportStoreProducts:ConnectionString"]));
-            
+            services.AddControllers();
+            services.AddIdentity<IdentityUser, IdentityRole>()
+            .AddEntityFrameworkStores<AppDbContext>()
+            .AddDefaultTokenProviders();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -37,10 +42,12 @@ namespace Lab2
                     app.UseDeveloperExceptionPage();
                 }
                 app.UseDeveloperExceptionPage(); // informacje szczegó³owe o b³êdach
-                app.UseElapsedTimeMiddleWare();
+                //app.UseElapsedTimeMiddleWare();
                 app.UseStatusCodePages(); // Wyœwietla strony ze statusem b³êdu
                 app.UseStaticFiles(); // obs³uga treœci statycznych css, images, js
                 app.UseRouting();
+                app.UseAuthentication();
+                app.UseAuthorization();
                 app.UseEndpoints(endpoints =>
                 {
                     endpoints.MapControllerRoute(
@@ -63,6 +70,15 @@ namespace Lab2
                     {
                         controller = "Admin",
                     });
+
+                    endpoints.MapControllerRoute(
+                     name: "Admin panel edit",
+                    pattern: "{controller=Admin}/{action=Edit}/{id?}");
+
+                    endpoints.MapControllerRoute(
+                         name: "Admin panel Delete",
+                        pattern: "{controller=Admin}/{action=Delete}/{id?}");
+
                 });
                 SeedData.EnsurePopulated(app); 
                
