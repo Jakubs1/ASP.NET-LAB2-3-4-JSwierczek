@@ -71,14 +71,6 @@ namespace Lab2
                         controller = "Admin",
                     });
 
-                    endpoints.MapControllerRoute(
-                     name: "Admin panel edit",
-                    pattern: "{controller=Admin}/{action=Edit}/{id?}");
-
-                    endpoints.MapControllerRoute(
-                         name: "Admin panel Delete",
-                        pattern: "{controller=Admin}/{action=Delete}/{id?}");
-
                 });
                 SeedData.EnsurePopulated(app); 
                

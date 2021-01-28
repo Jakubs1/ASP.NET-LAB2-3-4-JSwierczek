@@ -31,7 +31,7 @@ namespace Lab2.Controllers
         // pobranie produktu po ID 
 
         [HttpGet("{IDProduct}")]
-        public Product Get(int IDProduct) => repository.Products.FirstOrDefault(p => p.IDProduct == p.IDProduct);
+        public Product Get(int IDP) => repository.Products.FirstOrDefault(p => p.IDProduct == IDP);
 
 
         // Dodawanie produktu
